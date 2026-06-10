@@ -152,9 +152,158 @@ tNodo * crearNodo(void * dato, unsigned tamDato){
 
    return nuevonodo;
 }
+///Resto funciones
+/*
+
+int contarNodosAlturaDada(tArbol * arbol, int altura){
+   if( (*arbol) == NULL ){
+    return 0;
+   }
+
+   if(altura != 1){
+     return contarNodosAlturaDada( &(*arbol)->izq, altura - 1 ) + contarNodosAlturaDada( &(*arbol)->der, altura - 1 );
+   }
+
+   return 1;
+}
+/*
+int cortar_hojas(t_arbol* pArb)
+{
+    if( !pArb || !*pArb)
+    {
+        return 0;
+    }
+    if(!(*pArb)->izquierda && !(*pArb)->derecha)
+    {
+        free((*pArb)->data);
+        free(*pArb);
+        *pArb=NULL;
+        return 1;
+    }
+    return cortar_hojas((&(*pArb)->izquierda))+cortar_hojas((&(*pArb)->derecha));
+}
+*/
+
+
+struct sNodo* cortarHojas(tArbol*arbol){
+
+  if( (*arbol) == NULL ){
+    return NULL;
+  }
+
+  if( (*arbol)->izq == NULL && (*arbol)->der == NULL ){
+     struct sNodo * nodoeliminar = (*arbol);
+
+     free(nodoeliminar->dato);
+     free(nodoeliminar);
+
+     (*arbol) = NULL;
+     return NULL;
+  }
+
+  (*arbol)->izq = cortarHojas( &(*arbol)->izq);
+
+  (*arbol)->der = cortarHojas( &(*arbol)->der);
+
+
+  return (*arbol);
+}
+
+
+void recorrerDespuesDeAltura(tArbol * arbol, tAccion accion, unsigned altura){
+  if((*arbol) == NULL ){
+    return;
+  }
+
+  recorrerDespuesDeAlturaAux(arbol,accion,altura,0);
+
+}
+//Inclusive la altura
+void recorrerDespuesDeAlturaAux(tArbol * arbol, tAccion accion, unsigned altura, unsigned alturaActual){
+   if( (*arbol) == NULL ){
+    return;
+   }
+   if(alturaActual >= altura){
+     accion( (*arbol)->dato );
+   }
+
+   recorrerDespuesDeAlturaAux(&(*arbol)->izq,accion,altura,alturaActual + 1);
+   recorrerDespuesDeAlturaAux(&(*arbol)->der,accion,altura,alturaActual + 1);
+
+}
+
+
+void recorrerHastaAltura(tArbol * arbol,tAccion accion, unsigned altura){
+   if( (*arbol)==NULL ){
+     return;
+   }
+
+   recorrerHastaAlturaAux(arbol,accion,altura,0);
+}
+//No inclusive
+void recorrerHastaAlturaAux(tArbol * arbol,tAccion accion, unsigned altura,unsigned alturaActual){
+   if( (*arbol)==NULL ){
+     return;
+   }
+
+   if(altura > alturaActual){
+    accion( (*arbol)->dato );
+    recorrerHastaAlturaAux(&(*arbol)->izq,accion,altura, alturaActual+1);
+    recorrerHastaAlturaAux(&(*arbol)->der,accion,altura, alturaActual+1);
+   }
+}
 
 
 
+unsigned alturaArbol(tArbol * arbol){
+  if( (*arbol) == NULL ){
+    return 0;
+  }
+
+  int alturaIZQ = alturaArbol( &(*arbol)->izq );
+  int alturaDER = alturaArbol( &(*arbol)->der );
+
+  return (alturaIZQ > alturaDER ? alturaIZQ : alturaDER ) + 1;
+}
+
+
+
+unsigned cantidadNodosHijosIzq(tArbol * arbol){
+   if( (*arbol)==NULL ){
+    return 0;
+   }
+
+   if( (*arbol)->izq != NULL ){
+      return cantidadNodosHijosIzq( &((*arbol)->izq) ) + cantidadNodosHijosIzq(&((*arbol)->der))+1;
+   }else{
+      return cantidadNodosHijosIzq(&((*arbol)->der));
+   }
+}
+
+unsigned cantidadNodosHoja(tArbol * arbol){
+   if( (*arbol)== NULL ){
+    return 0;
+   }
+
+   if( (*arbol)->izq == NULL && (*arbol)->der == NULL ){
+     return cantidadNodosHoja( &((*arbol)->izq) ) + cantidadNodosHoja( &((*arbol)->der) ) + 1;
+   }else{
+     return cantidadNodosHoja( &((*arbol)->izq) ) + cantidadNodosHoja( &((*arbol)->der) );
+   }
+}
+
+
+unsigned cantidadNodos(const tArbol * arbol){
+
+  if( (*arbol) == NULL ){
+     return 0;
+  }
+
+  return cantidadNodos( &((*arbol)->izq)) + cantidadNodos( &((*arbol)->der)) + 1;
+
+}
+
+*/
 
 
 

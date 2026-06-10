@@ -1,0 +1,12 @@
+# compilados
+*.o
+*.exe
+*.out
+
+# carpetas de build
+bin/
+obj/
+
+# archivos temporales
+*.depend
+
