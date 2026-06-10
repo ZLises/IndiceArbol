@@ -1,0 +1,20 @@
+# depslib dependency file v1.0
+1780520862 source:c:\users\ulaza\onedrive\escritorio\ejercicios\indicearbol\alumno.c
+	"Alumno.h"
+
+1780522013 c:\users\ulaza\onedrive\escritorio\ejercicios\indicearbol\alumno.h
+	<stdio.h>
+	<stdlib.h>
+
+1781039967 source:c:\users\ulaza\onedrive\escritorio\ejercicios\indicearbol\main.c
+	"Alumno.h"
+	"Arbol.h"
+
+1781039917 c:\users\ulaza\onedrive\escritorio\ejercicios\indicearbol\arbol.h
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1781039907 source:c:\users\ulaza\onedrive\escritorio\ejercicios\indicearbol\arbol.c
+	"Arbol.h"
+
